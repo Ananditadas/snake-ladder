@@ -1,0 +1,19 @@
+body
+{
+  margin: 0;
+  background-image: url("b.png");
+  background-color: skyblue;
+  background-position: center;
+}
+
+
+canvas
+{
+  border: 30px solid transparent;
+  border-image: url(ground.jpg) 15% round;
+  width: 50%;
+  height: 500px;
+  margin-left: 10%;
+  margin-top: 2%;
+
+}
