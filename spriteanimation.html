@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Sprite Animation</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="../Game/javascript/jquery-1.10.2.min.js"></script>
+        <script src="../Game/javascript/easeljs-NEXT.min.js"></script>
+        <script src="../Game/javascript/preloadjs-NEXT.min.js"></script>
+        <script src="../Game/javascript/tweenjs-NEXT.min.js"></script>
+        <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+        
+    </head>
+    <body>
+        <div id="canvasholder">
+            <canvas id="canvas" width="600" height="500" style="background-color: #99ffff;">
+            
+            </canvas>
+        </div>
+        <button id="btn" onclick="init();">Start</button>
+        
+        
+        <script>
+          
+            var canvas,stage,loader;
+            var numberofImagesLoaded=0;
+            var ImageRun= new Image();
+            var ImageIdle= new Image();
+            var screen_width; //width of canvas
+            var screen_height; //Height of canvas
+            var monster;
+            var val,min=1,max=6;
+            function init()
+            {
+                console.log("init");
+                canvas=document.getElementById("canvas");
+                //ImageRun.onload=handleImageLoad;
+                //ImageRun.error=handleImageError;
+                //ImageRun.src="MonsterARun.png";
+                val=Math.floor(Math.random() * (max - min + 1)) + min;
+                console.log(val);
+                stage= new createjs.Stage(canvas);
+                
+                screen_width=canvas.width;
+                screen_height=canvas.height;
+                
+                console.log(screen_width);
+                console.log(screen_height);
+                
+                manifest = [
+                    {src: "../Game/MonsterARun.png", id:"monster"}
+                    
+                   ];
+                
+                console.log("manifest", manifest);
+                loader= new createjs.LoadQueue(false);
+                
+                loader.addEventListener("complete", handleComplete);
+                loader.loadManifest(manifest, true, "../images/");
+                
+            }
+            
+              function handleComplete()
+            {
+                    
+                    console.log("HandelComplete");
+                    var spritesheetwalk= new createjs.SpriteSheet({
+                    "images":[loader.getResult("monster")],
+                    "frames": { "width":64, "height":64, "regX":0, "regY":0},
+                    "animations": {
+                        walk:[0,9, "walk",4]
+                    }
+                    });
+                    
+                  
+                
+                monster= new createjs.Sprite(spritesheetwalk, "walk");
+                monster.y=50;
+               // monster.x=1000;
+                console.log("spritesheet")
+                stage.addChild(monster);
+                
+                stage.update();
+                
+                //stage.addChild(monsterStop);
+		//stage.addEventListener("stagemousedown", handleJumpStart);
+		createjs.Ticker.timingMode = createjs.Ticker.RAF;
+		createjs.Ticker.addEventListener("tick", tick);
+                //createjs.Ticker.removeEventListener("tick", tick);
+                //createjs.Ticker.addEventListener("tick", handleJumpStart);
+                
+                //stage.addChild(bitmp);
+                
+            }
+           
+            
+          /* function handleJumpStart() {
+                console.log("handleJumpSTart");
+		monster.gotoAndPlay("walk");
+	}*/
+        function tick(event)
+        {
+            
+		console.log("tick");
+                var deltaS = event.delta / 1000;
+                console.log("deltaS "+deltaS);
+                console.log("monster.x "+monster.x);
+                //var position = monster.x + val * deltaS;
+                var position = monster.x + 150 * deltaS;
+                console.log("POS: "+position);
+		var grantW = monster.getBounds().width * monster.scaleX;
+                //console.log("grantW: "+grantW);
+		monster.x = (position >= screen_width + grantW) ? -grantW : position;
+                
+                console.log("AFTER calculation"+monster.x);
+               // monster.gotoAndPlay();
+                //monsterStop.gotoAndPlay();
+		stage.update(event);
+                if(position>=500)  //Stopping Condition
+                {
+                    createjs.Ticker.removeEventListener("tick", tick);
+                }
+                //
+                //monster.gotoAndStop();
+            }
+        
+        
+        
+        </script>
+        
+    </body>
+    
+</html>
