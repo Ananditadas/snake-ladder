@@ -18,11 +18,16 @@ and open the template in the editor.
     </head>
     <body>
         <div id="canvasholder">
-            <canvas id="canvas" width="600" height="500" style="background-color: #99ffff;">
+            <canvas id="bg" width="600" height="500" style="z-index: 1; position:absolute; left:0px;top:0px;">
+                
+            </canvas>
+            <canvas id="canvas" width="600" height="500" style="z-index: 2; position:absolute; left:0px;top:0px;">
             
             </canvas>
+            
         </div>
-        <button id="btn" onclick="init();">Start</button>
+        <br>
+        <button id="btn" onclick="init();" style="margin-top: 500px;">Start</button>
         
         
         <script>
@@ -35,10 +40,25 @@ and open the template in the editor.
             var screen_height; //Height of canvas
             var monster;
             var val,min=1,max=6;
+            var bgcanvas = document.getElementById("bg"),
+            ctx = bgcanvas.getContext("2d");
+
+            bgcanvas.width = 600;
+            bgcanvas.height = 500;
+
+
+            var background = new Image();
+            background.src = "../Game/images/snakesandladdersboard.jpg";
+
+            background.onload = function(){
+                    ctx.drawImage(background,0,0);   
+            }
             function init()
             {
                 console.log("init");
                 canvas=document.getElementById("canvas");
+                
+                //context.fillRect(0, 0, canvas.width, canvas.height);
                 //ImageRun.onload=handleImageLoad;
                 //ImageRun.error=handleImageError;
                 //ImageRun.src="MonsterARun.png";
