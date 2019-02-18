@@ -16,7 +16,7 @@ and open the template in the editor.
         <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
         
     </head>
-    <body>
+    <body onload="init();">
         <div id="canvasholder">
             <canvas id="bg" width="600" height="500" style="z-index: 1; position:absolute; left:0px;top:0px;">
                 
@@ -27,12 +27,16 @@ and open the template in the editor.
             
         </div>
         <br>
-        <button id="btn" onclick="init();" style="margin-top: 500px;">Start</button>
+        <button id="btn" onclick="diceroll();" style="margin-top: 500px;">Start</button>
         
         
         <script>
           
             var canvas,stage,loader;
+            var cur_state = 'fact';
+            var pre_state = 'fact';
+            var game_started=false;
+            var ques = false;
             var numberofImagesLoaded=0;
             var ImageRun= new Image();
             var ImageIdle= new Image();
@@ -40,6 +44,7 @@ and open the template in the editor.
             var screen_height; //Height of canvas
             var monster;
             var val,min=1,max=6;
+            var total_step;
             var bgcanvas = document.getElementById("bg"),
             ctx = bgcanvas.getContext("2d");
 
@@ -55,15 +60,12 @@ and open the template in the editor.
             }
             function init()
             {
+                
                 console.log("init");
                 canvas=document.getElementById("canvas");
                 
-                //context.fillRect(0, 0, canvas.width, canvas.height);
-                //ImageRun.onload=handleImageLoad;
-                //ImageRun.error=handleImageError;
-                //ImageRun.src="MonsterARun.png";
-                val=Math.floor(Math.random() * (max - min + 1)) + min;
-                console.log(val);
+                
+                //total_step=val*20;
                 stage= new createjs.Stage(canvas);
                 
                 screen_width=canvas.width;
@@ -80,9 +82,84 @@ and open the template in the editor.
                 console.log("manifest", manifest);
                 loader= new createjs.LoadQueue(false);
                 
-                loader.addEventListener("complete", handleComplete);
-                loader.loadManifest(manifest, true, "../images/");
+                //loader.addEventListener("complete", handleComplete);
+                //loader.loadManifest(manifest, true, "../images/");
                 
+                
+            }
+            function diceroll()
+            {
+                val=Math.floor(Math.random() * (max - min + 1)) + min;
+                console.log(val);
+                //console.log("game_started");
+                if(val==1 && game_started==false)
+                {
+                    game_started=true;
+                    game_start();
+                }
+                else if (game_started== true)
+                {    
+                    console.log("within board");
+                    pre_state=cur_state;
+                    if (pre_state == 'fact')
+                    {
+                    
+                        cur_state='ques';
+                        showques();
+                        move_hero();
+                    
+                    }
+                     if(pre_state=='ques')
+                    {
+                        cur_state ='fact';
+                        showfact();
+                        move_hero();
+                    
+                    }
+                    game_start();
+                }
+                //roll++;
+            }
+            
+            function game_start(){
+                console.log("winthin game_start");
+                //console.log(pre_state);
+                //console.log(cur_state);
+                if (pre_state == cur_state)
+                {
+                    console.log("same");
+                    
+                }
+                else if(cur_state== 'fact')
+                {
+                    console.log("current state is fact");
+                    //diceroll();
+                    
+                    
+                }
+                else if(cur_state== 'ques')
+                {
+                    console.log("current state is ques");
+                    //diceroll();
+                    //loader.addEventListener("complete", handleComplete);
+                    //loader.loadManifest(manifest, true, "../images/");
+                    
+                }
+            }
+            
+            function showques()
+            {
+                console.log("Question will be shown");
+            }
+            
+            function showfact()
+            {
+                console.log("Fact will be shown");
+            }
+            function move_hero()
+            {
+               loader.addEventListener("complete", handleComplete);
+               loader.loadManifest(manifest, true, "../images/"); 
             }
             
               function handleComplete()
@@ -100,19 +177,18 @@ and open the template in the editor.
                   
                 
                 monster= new createjs.Sprite(spritesheetwalk, "walk");
-                monster.y=50;
-               // monster.x=1000;
+                monster.y=420;
+                monster.x=200;
                 console.log("spritesheet")
                 stage.addChild(monster);
                 
                 stage.update();
                 
-                //stage.addChild(monsterStop);
-		//stage.addEventListener("stagemousedown", handleJumpStart);
+                
 		createjs.Ticker.timingMode = createjs.Ticker.RAF;
-		createjs.Ticker.addEventListener("tick", tick);
-                //createjs.Ticker.removeEventListener("tick", tick);
-                //createjs.Ticker.addEventListener("tick", handleJumpStart);
+		//createjs.Ticker.addEventListener("tick", tick);
+                
+                
                 
                 //stage.addChild(bitmp);
                 
@@ -128,29 +204,48 @@ and open the template in the editor.
             
 		console.log("tick");
                 var deltaS = event.delta / 1000;
-                console.log("deltaS "+deltaS);
-                console.log("monster.x "+monster.x);
+                //console.log("deltaS "+deltaS);
+                //console.log("monster.x "+monster.x);
                 //var position = monster.x + val * deltaS;
                 var position = monster.x + 150 * deltaS;
                 console.log("POS: "+position);
 		var grantW = monster.getBounds().width * monster.scaleX;
-                //console.log("grantW: "+grantW);
+                console.log("getbounds"+ monster.getBounds().width );
+                console.log("scaleX"+ monster.scaleX );
+                console.log("grantW: "+grantW);
 		monster.x = (position >= screen_width + grantW) ? -grantW : position;
                 
                 console.log("AFTER calculation"+monster.x);
                // monster.gotoAndPlay();
                 //monsterStop.gotoAndPlay();
 		stage.update(event);
-                if(position>=500)  //Stopping Condition
+                if(position>=200)  //Stopping Condition
                 {
                     createjs.Ticker.removeEventListener("tick", tick);
                 }
                 //
                 //monster.gotoAndStop();
+                
             }
         
-        
-        
+            function showFact()
+            {
+                alert("This is a fact");
+            }
+            
+            function showQuestion()
+            {
+                alert("This is a question");
+            }
+            
+            function Game_start(val)
+            {
+                if(prev_state == cur_state)
+                {
+                    showFact();
+                    
+                }
+            }
         </script>
         
     </body>
