@@ -169,16 +169,18 @@ and open the template in the editor.
             function showques()
             {
                 console.log("Question will be shown");
+		$("#showq").show();
                 $('#countdown-11').timeTo(
                 30,
            // displayHours: false
             function(){ 
                 alert('Your time is finished');
+		$("#hideq").show();
                 //$('#btn1').hide();
                 //$('#btn2').hide();
                     }
                 );
-                $("#showq").show();
+                
                 
                 
             }
