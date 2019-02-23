@@ -9,34 +9,47 @@ and open the template in the editor.
         <title>Sprite Animation</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/timeTo.css">
         <script src="../Game/javascript/jquery-1.10.2.min.js"></script>
         <script src="../Game/javascript/easeljs-NEXT.min.js"></script>
         <script src="../Game/javascript/preloadjs-NEXT.min.js"></script>
         <script src="../Game/javascript/tweenjs-NEXT.min.js"></script>
         <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="javascript/jquery.timeTo.js"></script>
         
     </head>
     <body onload="init();">
-        <div id="canvasholder">
-            <canvas id="bg" width="600" height="500" style="z-index: 1; position:absolute; left:0px;top:0px;">
+        <div id="canvasholder" style="height:800px; width:600px;">
+            <canvas id="bg" width="600" height="800" style="z-index: 1; position:absolute; left:0px;top:0px;">
                 
             </canvas>
-            <canvas id="canvas" width="600" height="500" style="z-index: 2; position:absolute; left:0px;top:0px;">
+            <canvas id="canvas" width="600" height="800" style="z-index: 2; position:absolute; left:0px;top:0px;">
             
             </canvas>
             
         </div>
-        <br>
-        <button id="btn" onclick="diceroll();" style="margin-top: 500px;">Start</button>
+        <div id="showq" style="height:500px; width:500px; background:red;">
+            <div id="countdown-11" style="margin-top: 12px; margin-left: 22px;">
+                
+            </div>
+        </div>
+        
+        <button id="btn" onclick="diceroll();">Start</button>
         
         
         <script>
           
             var canvas,stage,loader;
-            var cur_state = 'fact';
-            var pre_state = 'fact';
-            var game_started=false;
-            var ques = false;
+            var cur_state = 'fact'; //keeps note of the current state of the player
+            var pre_state = 'fact'; //Keeps note of previous state of the player
+            var game_started=false; //flag to check if the player is inside the board
+            var solved = false;//Flag to check if the question is solved correctly or not
+            var fact="abc"; //Fact displayed to the player
+            var ques="abc?"; // Will have the question that would be displayed to the player
+            var count_times=0; //Keep track of no of times question displayed to the player
+            var current_pos=0; //Current board position of the player
+            var final_pos=0; //Final board position of the player after adding dice value
             var numberofImagesLoaded=0;
             var ImageRun= new Image();
             var ImageIdle= new Image();
@@ -49,7 +62,7 @@ and open the template in the editor.
             ctx = bgcanvas.getContext("2d");
 
             bgcanvas.width = 600;
-            bgcanvas.height = 500;
+            bgcanvas.height = 800;
 
 
             var background = new Image();
@@ -61,32 +74,27 @@ and open the template in the editor.
             function init()
             {
                 
+                $("#showq").hide();
                 console.log("init");
                 canvas=document.getElementById("canvas");
-                
-                
                 //total_step=val*20;
                 stage= new createjs.Stage(canvas);
                 
                 screen_width=canvas.width;
                 screen_height=canvas.height;
                 
-                console.log(screen_width);
-                console.log(screen_height);
-                
                 manifest = [
-                    {src: "../Game/MonsterARun.png", id:"monster"}
+                    {src: "../Game/MonsterARun.png", id:"monster"},
+                    {src:"../Game/MonsterAIdle.png", id:"monsterstand"}
                     
                    ];
                 
-                console.log("manifest", manifest);
                 loader= new createjs.LoadQueue(false);
-                
+  
                 //loader.addEventListener("complete", handleComplete);
                 //loader.loadManifest(manifest, true, "../images/");
-                
-                
             }
+           
             function diceroll()
             {
                 val=Math.floor(Math.random() * (max - min + 1)) + min;
@@ -128,11 +136,14 @@ and open the template in the editor.
                 if (pre_state == cur_state)
                 {
                     console.log("same");
+                    place_hero();
+                    setTimeout(showfact,1000);
                     
                 }
                 else if(cur_state== 'fact')
                 {
                     console.log("current state is fact");
+                    //counter will be moved
                     //diceroll();
                     
                     
@@ -141,26 +152,68 @@ and open the template in the editor.
                 {
                     console.log("current state is ques");
                     //diceroll();
+                    
                     //loader.addEventListener("complete", handleComplete);
                     //loader.loadManifest(manifest, true, "../images/");
                     
                 }
             }
             
+            function place_hero()
+            {
+                console.log("place_hero");
+                loader.addEventListener("complete", handleStand);
+                loader.loadManifest(manifest, true, "../images/"); 
+            }
+            
             function showques()
             {
                 console.log("Question will be shown");
+                $('#countdown-11').timeTo(
+                30,
+           // displayHours: false
+            function(){ 
+                alert('Your time is finished');
+                //$('#btn1').hide();
+                //$('#btn2').hide();
+                    }
+                );
+                $("#showq").show();
+                
+                
             }
             
             function showfact()
             {
+                
                 console.log("Fact will be shown");
+                swal("Your Fact is:", fact);    
             }
             function move_hero()
             {
                loader.addEventListener("complete", handleComplete);
                loader.loadManifest(manifest, true, "../images/"); 
             }
+            
+            function handleStand()
+            {
+                    console.log("Handle_Stand");
+                    var spritesheetwalk= new createjs.SpriteSheet({
+                    "images":[loader.getResult("monsterstand")],
+                    "frames": { "width":64, "height":64, "regX":0, "regY":0},
+                    "animations": {
+                                stand:[0,4, "stand",4]
+                                }
+                    });
+                    monsterstand=new createjs.Sprite(spritesheetwalk, "stand");
+                    monsterstand.y=475;
+                    monsterstand.x=0;
+                    //console.log("spritesheet")
+                    stage.addChild(monsterstand);
+                    stage.update();
+        
+            }
+            
             
               function handleComplete()
             {
@@ -170,16 +223,14 @@ and open the template in the editor.
                     "images":[loader.getResult("monster")],
                     "frames": { "width":64, "height":64, "regX":0, "regY":0},
                     "animations": {
-                        walk:[0,9, "walk",4]
-                    }
+                                walk:[0,9, "walk",4]
+                                }
                     });
-                    
-                  
-                
+
                 monster= new createjs.Sprite(spritesheetwalk, "walk");
                 monster.y=420;
                 monster.x=200;
-                console.log("spritesheet")
+                //console.log("spritesheet")
                 stage.addChild(monster);
                 
                 stage.update();
@@ -228,24 +279,7 @@ and open the template in the editor.
                 
             }
         
-            function showFact()
-            {
-                alert("This is a fact");
-            }
-            
-            function showQuestion()
-            {
-                alert("This is a question");
-            }
-            
-            function Game_start(val)
-            {
-                if(prev_state == cur_state)
-                {
-                    showFact();
-                    
-                }
-            }
+          
         </script>
         
     </body>
