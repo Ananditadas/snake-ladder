@@ -10,35 +10,184 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="css/timeTo.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <script src="../Game/javascript/jquery-1.10.2.min.js"></script>
         <script src="../Game/javascript/easeljs-NEXT.min.js"></script>
         <script src="../Game/javascript/preloadjs-NEXT.min.js"></script>
         <script src="../Game/javascript/tweenjs-NEXT.min.js"></script>
         <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
         <script src="javascript/jquery.timeTo.js"></script>
+        <script src="javascript/bootstrap.min.js"></script>
+        <style>
+            html {
+  height:100%;
+  background:#63D0FF;
+}
+
+body{
+  margin:0;
+  padding:0;
+  background:#63D0FF;
+  height:100%;
+}
+
+#wrapper {
+  position:relative;
+  width:100%;
+  height:100%;
+}
+
+#clouds{
+  background:url("bg-clouds2-tinypng.png") repeat-x 0 bottom #ACE6FF;
+  width:100%;
+  height:230px; /*190px*/
+  min-height:230px;
+  position:absolute;
+  top:0;
+  left:0;
+  z-index:1;
+  -webkit-transform:translate3d(0,0,0.01);
+  transform:translate3d(0,0,0.01);
+}
+
+#ground {
+  background:url("grass_tile-tinypng.png") repeat-x 0 0 transparent;    
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index:2;
+  width: 100%;
+  height: 192px;
+  min-height:192px;
+  border:0 none transparent;
+  outline:0 none transparent;
+  -webkit-transform:translate3d(0,0,0.01);
+  transform:translate3d(0,0,0.01);
+  will-change: transform;
+}
+        </style>
         
     </head>
     <body onload="init();">
-        <div id="canvasholder" style="height:800px; width:600px;">
-            <canvas id="bg" width="600" height="800" style="z-index: 1; position:absolute; left:0px;top:0px;">
-                
-            </canvas>
-            <canvas id="canvas" width="600" height="800" style="z-index: 2; position:absolute; left:0px;top:0px;">
-            
-            </canvas>
-            
-        </div>
-        <div id="showq" style="height:500px; width:500px; background:red;">
-            <div id="countdown-11" style="margin-top: 12px; margin-left: 22px;">
-                
+        <div class="container-fluid">
+            <div id="wrapper">
+                <div id="clouds"></div>
+                <br>
+                <br>
+                <br>
+                <div id="Game_Elements">
+                <div id="canvasholder" style="height:800px; width:600px;">
+                <canvas id="bg" width="600" height="800" style="z-index: 1; position:absolute; left:0px;top:0px;"></canvas>
+                <canvas id="canvas" width="600" height="800" style="z-index: 2; position:absolute; left:0px;top:0px;"></canvas>
+             </div>
+            <div id="score_div" style="background: plum; position:absolute; height:100px; width:100px; margin-top: -600px; margin-left:600px;">
+                <h3>Score:</h3>
+                <br>
+                <p id="score"></p>
             </div>
-        </div>
+            <div id="dice_div" style="background: plum; position:absolute; height:100px; width:100px; margin-top: -400px; margin-left:600px;">
+                <h3>Dice Val:</h3>
+                <p id="dice_val"></p>
+            </div>
+            <div id="showq" style="height:300px; width:400px; background:plum; margin-top:-600px; margin-left:800px;">
+                <center>
+                    <div id="countdown-11" style="margin-top: 12px; margin-left: 22px;"></div>
+                    <div id="q_a">
+                        <p id="ques"></p>
+                        <br>
+                        <div class="custom-control custom-radio">
+                            <label class="radio-inline">
+                                <input type="radio" name="opt" class="optn" value="yes">Yes
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="opt" class="optn" value="no">No
+                            </label>
+                        </div>
+                    </div>
+                
+                 </center>    
+            </div>
         
-        <button id="btn" onclick="diceroll();">Start</button>
+        <button id="btn" onclick="diceroll();" style=" margin-left:600px;">Start</button>
+        
+        </div>
+                <br>
+                <br>
+                <br>
+                <br><br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                
+                
+        <div id="ground"></div>
+      </div>
+            
+      </div>
+            
         
         
         <script>
+            document.addEventListener("DOMContentLoaded", function(event) {
+  function ground() {
+    var tl = new TimelineMax({
+      repeat: -1
+    });
+
+    tl.to("#ground", 20, {
+      backgroundPosition: "1301px 0px",
+      force3D: true,
+      rotation: 0.01,
+      z: 0.01,
+      autoRound: false,
+      ease: Linear.easeNone
+    });
+
+    return tl;
+  }
+
+  function clouds() {
+    var tl = new TimelineMax({
+      repeat: -1
+    });
+
+    tl.to("#clouds", 52, {
+      backgroundPosition: "-2247px bottom",
+      force3D: true,
+      rotation: 0.01,
+      z: 0.01,
+      //autoRound:false,
+      ease: Linear.easeNone
+    });
+
+    return tl;
+  }
+
+  var masterTL = new TimelineMax({
+    repeat: -1
+  });
+
+  // window load event makes sure image is
+  // loaded before running animation
+  window.onload = function() {
+    masterTL
+      .add(ground(), 0)
+      .add(clouds(), 0)
+      .timeScale(0.7)
+      .progress(1)
+      .progress(0)
+      .play();
+      init();
+  };
+});
+
+            
+ 
           
             var canvas,stage,loader;
             var cur_state = 'fact'; //keeps note of the current state of the player
@@ -50,9 +199,11 @@ and open the template in the editor.
             var count_times=0; //Keep track of no of times question displayed to the player
             var current_pos=0; //Current board position of the player
             var final_pos=0; //Final board position of the player after adding dice value
-            var numberofImagesLoaded=0;
-            var ImageRun= new Image();
-            var ImageIdle= new Image();
+            var score=0;
+            var response_ans="";
+            var orig_ans="";
+            var Counterimage=new Image();
+            Counterimage.src="../Game/images/woocommerce-pawn.png";
             var screen_width; //width of canvas
             var screen_height; //Height of canvas
             var monster;
@@ -73,10 +224,12 @@ and open the template in the editor.
             }
             function init()
             {
-                
+                    
                 $("#showq").hide();
+                $("#score").text(score);
                 console.log("init");
                 canvas=document.getElementById("canvas");
+                ct=canvas.getContext("2d");
                 //total_step=val*20;
                 stage= new createjs.Stage(canvas);
                 
@@ -98,6 +251,7 @@ and open the template in the editor.
             function diceroll()
             {
                 val=Math.floor(Math.random() * (max - min + 1)) + min;
+                $("#dice_val").text(val);
                 console.log(val);
                 //console.log("game_started");
                 if(val==1 && game_started==false)
@@ -111,12 +265,28 @@ and open the template in the editor.
                     pre_state=cur_state;
                     if (pre_state == 'fact')
                     {
-                    
                         cur_state='ques';
                         showques();
-                        move_hero();
-                    
-                    }
+                        console.log("score within diceroll: "+score);
+                        //$("#score").text(score);
+                        /*count_times=count_times+1;
+                        do
+                        {
+                            //showques();
+                            if(solved== true)
+                            {
+                                consol.log("question is solved");
+                                move_hero();
+                                break;
+                            }
+                            else if(solved== false)
+                            {
+                                console.log("question not solved");
+                                showques();
+                                count_times=count_times+1;
+                            }
+                        }while(count_times!=4);*/
+                      }
                      if(pre_state=='ques')
                     {
                         cur_state ='fact';
@@ -131,8 +301,6 @@ and open the template in the editor.
             
             function game_start(){
                 console.log("winthin game_start");
-                //console.log(pre_state);
-                //console.log(cur_state);
                 if (pre_state == cur_state)
                 {
                     console.log("same");
@@ -140,7 +308,7 @@ and open the template in the editor.
                     setTimeout(showfact,1000);
                     
                 }
-                else if(cur_state== 'fact')
+               /* else if(cur_state== 'fact')
                 {
                     console.log("current state is fact");
                     //counter will be moved
@@ -156,34 +324,60 @@ and open the template in the editor.
                     //loader.addEventListener("complete", handleComplete);
                     //loader.loadManifest(manifest, true, "../images/");
                     
-                }
+                }*/
             }
             
             function place_hero()
             {
                 console.log("place_hero");
-                loader.addEventListener("complete", handleStand);
-                loader.loadManifest(manifest, true, "../images/"); 
+                ct.drawImage(Counterimage,0,470,60,60);
+                cur_pos=1;
+                //loader.addEventListener("complete", handleStand);
+                //loader.loadManifest(manifest, true, "../images/"); 
             }
             
             function showques()
             {
                 console.log("Question will be shown");
-		$("#showq").show();
+                $("#ques").text("Is abc?");
+                $(".optn").prop('checked',false);
+                $("#showq").show();
                 $('#countdown-11').timeTo(
-                30,
-           // displayHours: false
-            function(){ 
-                alert('Your time is finished');
-		$("#hideq").show();
-                //$('#btn1').hide();
-                //$('#btn2').hide();
+                    30,
+                    function()
+                    { 
+                        alert('Your time is finished');
+                        $("#showq").hide();
                     }
-                );
+                   );
                 
-                
+                $("input[type='radio']").click(function()
+                {
+                    response_ans=$("input[name='opt']:checked").val();
+                    console.log(response_ans);
+                    if(response_ans == 'yes')
+                    {
+                        
+                        solved=true;
+                        score=score+1;
+                        console.log("score: "+score);
+                        $("#score").text(score);
+                        $("#showq").hide();
+                        $("#countdown-11").timeTo("stop");
+                    }
+                    else if (response_ans=='no')
+                    {
+                        solved=false;
+                        $("#showq").hide();
+                        $("#countdown-11").timeTo("stop");
+                    }
+            
+                });  
+            
                 
             }
+                
+            
             
             function showfact()
             {
@@ -272,7 +466,7 @@ and open the template in the editor.
                // monster.gotoAndPlay();
                 //monsterStop.gotoAndPlay();
 		stage.update(event);
-                if(position>=200)  //Stopping Condition
+                if(position>=500)  //Stopping Condition
                 {
                     createjs.Ticker.removeEventListener("tick", tick);
                 }
