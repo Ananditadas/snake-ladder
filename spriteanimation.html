@@ -96,7 +96,7 @@ body{
                 <center>
                     <div id="countdown-11" style="margin-top: 12px; margin-left: 22px;"></div>
                     <div id="q_a">
-                        <p id="ques"></p>
+                       <!-- <p id="ques"></p>
                         <br>
                         <div class="custom-control custom-radio">
                             <label class="radio-inline">
@@ -105,7 +105,7 @@ body{
                             <label class="radio-inline">
                                 <input type="radio" name="opt" class="optn" value="no">No
                             </label>
-                        </div>
+                        </div>-->
                     </div>
                 
                  </center>    
@@ -263,40 +263,21 @@ body{
                 {    
                     console.log("within board");
                     pre_state=cur_state;
-                    if (pre_state == 'fact')
+                    if (pre_state == 'fact') //Current state of the player is 'Question'
                     {
                         cur_state='ques';
+                        count_times=0;
                         showques();
-                        console.log("score within diceroll: "+score);
-                        //$("#score").text(score);
-                        /*count_times=count_times+1;
-                        do
-                        {
-                            //showques();
-                            if(solved== true)
-                            {
-                                consol.log("question is solved");
-                                move_hero();
-                                break;
-                            }
-                            else if(solved== false)
-                            {
-                                console.log("question not solved");
-                                showques();
-                                count_times=count_times+1;
-                            }
-                        }while(count_times!=4);*/
-                      }
-                     if(pre_state=='ques')
+                    }
+                    if(pre_state=='ques') //Current state of the player is 'Fact'
                     {
                         cur_state ='fact';
                         showfact();
                         move_hero();
                     
                     }
-                    game_start();
-                }
-                //roll++;
+                    //game_start();
+                } 
             }
             
             function game_start(){
@@ -308,39 +289,68 @@ body{
                     setTimeout(showfact,1000);
                     
                 }
-               /* else if(cur_state== 'fact')
-                {
-                    console.log("current state is fact");
-                    //counter will be moved
-                    //diceroll();
-                    
-                    
-                }
-                else if(cur_state== 'ques')
-                {
-                    console.log("current state is ques");
-                    //diceroll();
-                    
-                    //loader.addEventListener("complete", handleComplete);
-                    //loader.loadManifest(manifest, true, "../images/");
-                    
-                }*/
             }
             
-            function place_hero()
+            function place_hero() //Drawing the counter on the first position of the board
             {
                 console.log("place_hero");
                 ct.drawImage(Counterimage,0,470,60,60);
                 cur_pos=1;
-                //loader.addEventListener("complete", handleStand);
-                //loader.loadManifest(manifest, true, "../images/"); 
             }
+            
+            var objDiv,ques_item,radioItem1,radioItem2,objTextNode1,objTextNode2,objLabel,objLabel2,br,submit_btn;
             
             function showques()
             {
-                console.log("Question will be shown");
-                $("#ques").text("Is abc?");
-                $(".optn").prop('checked',false);
+                console.log("Showques function");
+                //$("p").append("Is this abc??");
+                objDiv = document.getElementById("q_a");
+                 
+                ques_item=document.createElement("p");
+                ques_item.innerHTML="Is abc??";
+                $(objDiv).append(ques_item);
+                radioItem1 = document.createElement("input");
+                radioItem1.type = "radio";
+                radioItem1.name = "optn";
+                radioItem1.id = "rad1";
+                radioItem1.value = "yes";
+                 
+                radioItem1.defaultChecked = true; 
+                radioItem1.checked = true;
+
+                radioItem2 = document.createElement("input");
+                radioItem2.type = "radio";
+                radioItem2.name = "optn";
+                radioItem2.id = "rad2";
+                radioItem2.value = "no";
+ 
+                objTextNode1 = document.createTextNode("Yes");
+                objTextNode2 = document.createTextNode("No");
+ 
+                objLabel = document.createElement("label");
+                objLabel.htmlFor = radioItem1.id;
+                objLabel.appendChild(radioItem1);
+                objLabel.appendChild(objTextNode1);
+ 
+                objLabel2 = document.createElement("label");
+                objLabel2.htmlFor = radioItem2.id;
+                objLabel2.appendChild(radioItem2);
+                objLabel2.appendChild(objTextNode2);
+         
+ 
+                objDiv.appendChild(objLabel);
+                objDiv.appendChild(objLabel2);
+                
+                br=document.createElement("br");
+                objDiv.appendChild(br);
+                submit_btn=document.createElement("input");
+                submit_btn.type="submit";
+                submit_btn.value="submit";
+                submit_btn.id="sbmt";
+                submit_btn.addEventListener("click",getResponse,false);
+                
+                objDiv.appendChild(submit_btn);
+ 
                 $("#showq").show();
                 $('#countdown-11').timeTo(
                     30,
@@ -350,34 +360,51 @@ body{
                         $("#showq").hide();
                     }
                    );
-                
-                $("input[type='radio']").click(function()
-                {
-                    response_ans=$("input[name='opt']:checked").val();
-                    console.log(response_ans);
-                    if(response_ans == 'yes')
-                    {
-                        
-                        solved=true;
-                        score=score+1;
-                        console.log("score: "+score);
-                        $("#score").text(score);
-                        $("#showq").hide();
-                        $("#countdown-11").timeTo("stop");
-                    }
-                    else if (response_ans=='no')
-                    {
-                        solved=false;
-                        $("#showq").hide();
-                        $("#countdown-11").timeTo("stop");
-                    }
-            
-                });  
-            
-                
+                   count_times=count_times+1;
             }
-                
             
+            function getResponse()
+            {
+                response_ans=$("input[name='optn']:checked").val();
+                console.log(response_ans);
+                
+                $("#countdown-11").stop();
+                $(ques_item).remove();
+                $(radioItem1).remove();
+                $(radioItem2).remove();
+                $(objTextNode1).remove();
+                $(objTextNode2).remove()
+                $(objLabel).remove();
+                $(objLabel2).remove();
+                $(br).remove()
+                $(submit_btn).remove();
+                //$("#countdown-11").stop();
+                $("#showq").hide();
+                
+                if(count_times!=4)
+                {
+                    if(response_ans=="no")
+                    {
+                        //count_times=count_times+1;
+                       // alert("Incorrect answer");
+                        showques();
+                        $("#countdown-11").stop();
+                    }
+                    else
+                    {
+                        alert("correct answer");
+                        $("#countdown-11").stop();
+                        score=score+1;
+                        $("#score").text(score);
+                        //$("showq").hide();
+                    }
+                }
+                else
+                {
+                    alert("You have exceeded number of attempts");
+                    $("#countdown-11").stop();
+                }
+            }
             
             function showfact()
             {
@@ -385,6 +412,7 @@ body{
                 console.log("Fact will be shown");
                 swal("Your Fact is:", fact);    
             }
+            
             function move_hero()
             {
                loader.addEventListener("complete", handleComplete);
@@ -414,7 +442,7 @@ body{
               function handleComplete()
             {
                     
-                    console.log("HandelComplete");
+                    //console.log("HandelComplete");
                     var spritesheetwalk= new createjs.SpriteSheet({
                     "images":[loader.getResult("monster")],
                     "frames": { "width":64, "height":64, "regX":0, "regY":0},
