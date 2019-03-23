@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css?family=Stalemate');
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+img {
+  height: 590px;
+  width: 100%;
+
+}
+body {
+  background-color: #5C5543;
+  font-family: 'Stalemate', cursive;
+}
+
+
+.container {
+  overflow: hidden;
+
+}
+
+
+.book-wrapper {
+  position: relative;
+  margin: 1% auto;
+  width: 80%;
+
+}
+
+
+
+.book-wrapper img {
+      filter: drop-shadow(15px 5px 5px #494338);
+
+}
+.pages-container {
+    position: absolute;
+    top: 0;
+    left: 7%;
+    right: 0;
+    bottom: 0;
+  height: 50px;
+
+}
+
+
+.pages [class^="page-num-"] {
+	background-image: url("page6.png");
+  background-size: cover;
+  background-position: right;
+
+
+}
+
+
+.pages-content {
+    text-align: center;
+      position: absolute;
+    width: 100%;
+    height: 100%;
+    display: table;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10%;
+
+}
+
+.content-inner {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+
+.book-wrapper {
+   user-select: none;
+}
+
+
+  .pages-background {
+
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+}
+
+a
+{
+  text-decoration: none;
+  outline: none;
+}
+
+a:visited
+{
+  color: inherit;
+
+}
