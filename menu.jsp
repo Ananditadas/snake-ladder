@@ -3,11 +3,13 @@
   <head>
     <meta charset="utf-8">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="js/turn.js"></script>
+    <script src="js/turn.js" type="text/javascript"></script>
+    <script src="js/menu.js" type="text/javascript"></script>
     <link  rel="stylesheet" href="menu.css" type="text/css" />
   </head>
 
   <body>
+
     <div class="container">
   <div class="book-wrapper">
     <div class="book-cover">
@@ -60,25 +62,8 @@
 
 </div>
 
-  <script type="text/javascript">
-            $(window).ready(function() {
-          $('.pages').turn({
-            duration: 1500,
-            width: 880,
-            height: 590,
-          //  acceleration: true,
-          //  display: 'single',
-           // autoCenter: true,
-           turnCorners: "bl,br",
-            elevation: 300,
-            when: {
-              turned: function(e, page) {
-                console.log('Current view: ', $(this).turn('view'));
-              }
-            }
-          });
-          });
-  </script>
+
+
   </body>
 
 </html>
