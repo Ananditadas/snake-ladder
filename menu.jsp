@@ -19,7 +19,6 @@
       <div class="pages">
         <div class="page-num-1">
           <div class="pages-content">
-            <div class="pages-background"></div>
             <div class="content-inner">
               <h1><a href="#"> New Game </a></h1>
               <div class="text"><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas ea non vitae a assumenda sint quod, dolores laboriosam velit corrupti nobis cupiditate perspiciatis natus exercitationem, architecto esse ratione blanditiis! Itaque.</p></div>
