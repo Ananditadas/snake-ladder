@@ -1,0 +1,109 @@
+*, ::before, ::after
+{
+  font-family: Roboto, Helvetica, sans-serif !important;
+  outline: none;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+}
+
+body
+{
+  padding: 4em;
+}
+
+h1
+{
+  line-height: 48px;
+  font-size: 36px;
+  font-weight: 50 !important;
+  color: #554d56;
+  letter-spacing: 0.1em;
+}
+
+p
+{
+  line-height: 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ee6723;
+  margin-left: 45%;
+  margin-top: -20px;
+}
+
+form
+{
+  display: block;
+  width: 60%;
+  margin: auto;
+  padding: 3em;
+}
+
+
+.inputWrapper
+{
+  padding-bottom: 3em;
+}
+
+input
+{
+  flex: 1;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #979197 !important;
+  font-size: 16px !important;
+}
+
+input:focus
+{
+  border-bottom-color: #fdbd39 !important;
+}
+
+::placeholder
+{
+  color: #979197 !important;
+  opacity: 1;
+}
+
+button
+{
+  width: 100%;
+  margin-left: 50%;
+  font-size: 18px !important;
+  height: 60px;
+  background-color: #fdbd39 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 0 !important;
+  font-weight: bold !important;
+}
+
+footer
+{
+  width: 50%;
+  display: block;
+  margin: auto;
+  padding-left: 12em;
+  color: #979197;
+  font-size: 1em;
+  margin-top: -30px;
+}
+
+
+
+a, a:hover, a:visited
+{
+  text-decoration: none;
+  color: #fdbd39;
+}
+
+.extraInfo
+{
+  position: static;
+  line-height: 16px;
+  font-size: 14px;
+  font-family: 'Indie Flower', cursive !important;
+  color: #554d56;
+  display: none;
+}
