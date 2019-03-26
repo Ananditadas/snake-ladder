@@ -1,0 +1,150 @@
+*, ::before, ::after {
+    margin: 0;
+    padding: 0;
+    padding-bottom: 0px;
+    border: none !important;
+    outline: none;
+    box-shadow: none;
+    border-radius: 0 !important;
+    font-family: Roboto, Helvetica, sans-serif !important;
+    font-weight: inherit;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+header
+{
+  width: 100%;
+  padding-top: 8%;
+  text-align: center;
+}
+
+
+
+
+header h1
+{
+  line-height: 48px;
+  font-size: 36px;
+  font-weight: 300;
+  color: #554d56;
+  letter-spacing: 0.1em;
+  text-align: center;
+  margin-left: 3%;
+}
+
+form
+{
+  position: relative;
+  display: block;
+  max-width: 392px;
+  width: 100%;
+  margin: 5px auto 0;
+}
+
+
+
+
+a, a:hover, a:visited, a:active
+{
+    color: #fdbd39 !important;
+    text-decoration: none !important;
+    font-weight: normal;
+}
+
+
+
+form button
+{
+    width: 100%;
+    height: 60px;
+    margin-left: 1em;
+    font-size: 16px;
+    background-color: #fdbd39 !important;
+    color: #fff !important;
+    border: none !important;
+}
+
+
+
+
+footer
+{
+  width: 30%;
+  margin: 0 auto;
+  line-height: 19px;
+  color: #979197;
+  padding-top: 0.5em;
+}
+
+.inputWrapper
+{
+  position: relative;
+  width: 100%;
+  padding: 35px 16px 8px;
+}
+
+
+
+
+input
+{
+  width: 360px !important;
+  flex: 1;
+  height: 50px !important;
+  line-height: 24px !important;
+  color: #554d56 !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #979197 !important;
+  font-size: 16px !important;
+}
+
+button
+{
+  text-align: center;
+  position: relative;
+  background: transparent none;
+  background-color: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 1em;
+  font-weight: bold !important;
+}
+
+
+footer a
+{
+  color: #c8cf2d;
+}
+
+
+::placeholder
+{
+    color: #979197 !important;
+    opacity: 1;
+}
+
+
+input:focus
+{
+  border-bottom-color: #fdbd39 !important;
+  box-shadow: none !important;
+}
+
+span
+{
+  font-size: 0.9em;
+  padding-left: 3em;
+
+}
+
+
+
+
+
+.input2
+{
+  margin-top: 3em;
+}
