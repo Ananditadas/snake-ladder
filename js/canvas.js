@@ -5,7 +5,9 @@ var moveTopixel;
 var spriteCanvas = document.getElementById("spriteStage");
 var c2 = spriteCanvas.getContext('2d');
 var boy = new Image();
-boy.src = "images/boy.png"
+var boy2 = new Image();
+boy.src = "images/harry.png"
+boy2.src = "images/harryf.png"
 var row = 1;
 
 
@@ -102,6 +104,7 @@ function move_hero()
         {
             cur_x  = cur_x + moveTopixel;
         }
+        c2.drawImage(boy, cur_x, cur_y, 64, 64);
   }
   else
   {
@@ -119,10 +122,10 @@ function move_hero()
         {
             cur_x  = cur_x - moveTopixel;
         }
-
+        c2.drawImage(boy2, cur_x, cur_y, 64, 64);
   }
 
-  c2.drawImage(boy, cur_x, cur_y, 64, 64);
+
 
 }
 //---------------------------------------------------------------------------//
@@ -317,16 +320,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var tl = new TimelineMax({
       repeat: -1
     });
-
-    tl.to("#ground", 20, {
-        backgroundPosition: "1301px 0px",
-        force3D:true,
-        rotation:0.01,
-        z:0.01,
-        autoRound:false,
-        ease: Linear.easeNone
-      });
-
     return tl;
   }
 
@@ -336,14 +329,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
       repeat: -1
     });
 
-    tl.to("#clouds", 52, {
-      backgroundPosition: "-2247px bottom",
-      force3D:true,
-      rotation:0.01,
-      z:0.01,
-      //autoRound:false,
-      ease: Linear.easeNone
-    });
+
 
     return tl;
   }
@@ -404,7 +390,7 @@ window.onload = function() {
       {
         if(column == true)
         {
-          c.fillStyle = "#33a842";
+          c.fillStyle = "#CC820E";
         }
         else {
           c.fillStyle = "#503838";
@@ -417,7 +403,7 @@ window.onload = function() {
           c.fillStyle = "#503838";
         }
         else {
-          c.fillStyle = "#33a842";
+          c.fillStyle = "#CC820E";
         }
 
       }
@@ -468,12 +454,41 @@ window.onload = function() {
 
 //-------------------------Addding snake and ladder--------------------------//
   var img = document.getElementById("ladder1");
-  c.drawImage(img, 150, 425,50,120);
-  var s = document.getElementById("snake1");
-  c.drawImage(s, 10, 30, 100, 100);
-  var s1 = document.getElementById("snake2");
-  c.drawImage(s1, 550, 320, 100, 100);
+  c.drawImage(img, 175,375,200,235);
+  c.drawImage(img, 430,0,250,200);
+  c.drawImage(img, 510,380,250,210);
 
+  var img = document.getElementById("ladder3");
+  c.drawImage(img, 590,80,150,350);
+  c.drawImage(img, 300,270,150,150);
+
+  var img = document.getElementById("ladder4");
+  c.drawImage(img, 70,110,230,190);
+
+  var s = document.getElementById("snake1");
+  c.drawImage(s, 120, 29, 150, 100);
+
+  var s1 = document.getElementById("snake5");
+  c.drawImage(s1, 390, 100, 350, 400);
+
+  var s1 = document.getElementById("snake6");
+  c.drawImage(s1, 220, 110, 300, 410);
+
+  var s1 = document.getElementById("snake2");
+  c.drawImage(s1,-90, 220, 250, 220);
+
+  var s1 = document.getElementById("snake3");
+  c.drawImage(s1,200, 420, 280, 220);
+
+
+  var s1 = document.getElementById("snake7");
+  c.drawImage(s1, 5, 110, 350, 300);
+
+  var s1 = document.getElementById("snake8");
+  c.drawImage(s1, 30, 390, 250, 500);
+
+  var s1 = document.getElementById("snake9");
+  c.drawImage(s1, 260,-50, 350, 400);
 
 
 };
