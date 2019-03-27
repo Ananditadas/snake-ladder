@@ -16,7 +16,7 @@
     <div class="container">
   <div class="book-wrapper">
     <div class="book-cover">
-      <img src="images/book5.png" alt="">
+      <img src="images/book52.png" alt="">
     </div>
     <div class="pages-container">
       <div class="pages">
