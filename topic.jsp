@@ -9,6 +9,10 @@
   </head>
 
   <body>
+    <audio id="sound">
+      <source src="music/Prologue.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
     <div class="container">
   <div class="book-wrapper">
     <div class="book-cover">
@@ -72,7 +76,11 @@
 
 </div>
 
-  
+<script type="text/javascript">
+    var s = document.getElementById("sound");
+    s.play();
+    s.loop = true;
+</script>
   </body>
 
 </html>
