@@ -16,7 +16,6 @@ function roll_dice()
 {
 
     dice_face_val = Math.floor(Math.random() * (max - min + 1)) + min;
-    console.log(dice_face_val);
     var b = document.getElementById("value");
     b.innerHTML = dice_face_val;
 
@@ -41,13 +40,13 @@ function roll_dice()
         if(prev_state == 'fact')
         {
             cur_state='ques';
-            showQuestion();
+            //showQuestion();
             move_hero();
         }
         else
         {
             cur_state ='fact';
-            showFact();
+            //showFact();
             move_hero();
 
         }
@@ -65,7 +64,7 @@ function game_start()
 {
     if(prev_state == cur_state)
     {
-      showFact();
+      //showFact();
       place_hero();
     }
 
@@ -80,7 +79,7 @@ function game_start()
 
 
 
-//-----------------------------move_hero-------------------------------------//
+//-----------------------------move_hero--------------------------------------//
 
 function move_hero()
 {
@@ -105,6 +104,61 @@ function move_hero()
             cur_x  = cur_x + moveTopixel;
         }
         c2.drawImage(boy, cur_x, cur_y, 64, 64);
+        setTimeout(drawHarry, 2000);
+
+        function drawHarry()
+        {
+            if(cur_x == 213 && cur_y == 495)
+            {
+              c2.clearRect(cur_x, cur_y, 64, 64);
+              c2.drawImage(boy, 284, 383, 64, 64);
+              cur_x = 284; cur_y = 383;
+            }
+
+            if(cur_x == 568 && cur_y == 495)
+            {
+              c2.clearRect(cur_x, cur_y, 64, 64);
+              c2.drawImage(boy, 639, 383, 64, 64);
+              cur_x = 639; cur_y = 383;
+            }
+
+
+
+            if(cur_x == 142 && cur_y == 383)
+            {
+              c2.clearRect(cur_x, cur_y, 64, 64);
+              c2.drawImage(boy, 142, 495, 64, 64);
+              cur_x = 142; cur_y = 495;
+              row = row  - 2;
+            }
+
+
+            if(cur_x == 71 && cur_y == 271)
+            {
+              c2.clearRect(cur_x, cur_y, 64, 64);
+              c2.drawImage(boy, 0, 383, 64, 64);
+              cur_x = 0; cur_y = 383;
+              row = row  - 2;
+            }
+
+            if(cur_x == 639 && cur_y == 271)
+            {
+              c2.clearRect(cur_x, cur_y, 64, 64);
+              c2.drawImage(boy, 568, 159, 64, 64);
+              cur_x = 568; cur_y = 159;
+            }
+
+            if(cur_x == 284 && cur_y == 159)
+            {
+              c2.clearRect(cur_x, cur_y, 64, 64);
+              c2.drawImage(boy, 299, 327, 64, 64);
+              cur_x = 299; cur_y = 327;
+              row = row - 3;
+            }
+
+
+        }
+
   }
   else
   {
@@ -122,7 +176,81 @@ function move_hero()
         {
             cur_x  = cur_x - moveTopixel;
         }
+        console.log(cur_x);
+        console.log(cur_y);
         c2.drawImage(boy2, cur_x, cur_y, 64, 64);
+        setTimeout(draw_Harry, 2000);
+
+        function draw_Harry()
+        {
+            if(cur_x == 370 && cur_y == 439)
+            {
+              c2.clearRect(cur_x, cur_y, 64, 64);
+              c2.drawImage(boy2, 355, 495, 64, 64);
+              cur_x = 355; cur_y = 495;
+              row--;
+            }
+
+            if(cur_x == 370 && cur_y == 327)
+            {
+              c2.clearRect(cur_x, cur_y, 64, 64);
+              c2.drawImage(boy2, 284, 271, 64, 64);
+              cur_x = 284; cur_y = 271;
+              row++;
+            }
+
+
+            if(cur_x == 441 && cur_y == 215)
+            {
+              c2.clearRect(cur_x, cur_y, 64, 64);
+              c2.drawImage(boy2, 512, 439, 64, 64);
+              cur_x = 512; cur_y = 439;
+              row = row - 4;
+            }
+
+
+            if(cur_x == 157 && cur_y == 215)
+            {
+              c2.clearRect(cur_x, cur_y, 64, 64);
+              c2.drawImage(boy2, 157, 103, 64, 64);
+              cur_x = 157; cur_y = 103;
+            }
+
+
+            if(cur_x == 512 && cur_y == 103)
+            {
+              c2.clearRect(cur_x, cur_y, 64, 64);
+              c2.drawImage(boy2, 583, -9, 64, 64);
+              cur_x = 583; cur_y = -9;
+            }
+
+            if(cur_x == 86 && cur_y == 103)
+            {
+              c2.clearRect(cur_x, cur_y, 64, 64);
+              c2.drawImage(boy2, 0, 271, 64, 64);
+              cur_x = 0; cur_y = 271;
+              row = row - 3;
+            }
+
+            if(cur_x == 370 && cur_y == -9)
+            {
+              c2.clearRect(cur_x, cur_y, 64, 64);
+              c2.drawImage(boy2, 426, 271, 64, 64);
+              cur_x = 426; cur_y = 271;
+              row = row - 5;
+            }
+
+            if(cur_x == 86 && cur_y == -9)
+            {
+              c2.clearRect(cur_x, cur_y, 64, 64);
+              c2.drawImage(boy2, 228, 103, 64, 64);
+              cur_x = 228; cur_y = 103;
+              row = row - 2;
+            }
+
+
+        }
+
   }
 
 
@@ -140,7 +268,7 @@ function move_hero()
 
 function showFact()
 {
-  console.log("fact is shown");
+
   $("#showq").hide();
   $("#btn").hide();
 
@@ -183,7 +311,7 @@ var objDiv,ques_item,radioItem1,radioItem2,objTextNode1,objTextNode2,objLabel,ob
 
 function showQuestion()
 {
-  console.log("question is shown");
+
   objDiv = document.getElementById("opt");
   ques_item = document.createElement("p");
   ques_item.innerHTML = "Is abc??";
