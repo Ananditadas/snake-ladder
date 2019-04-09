@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link  rel="stylesheet" href="css/result.css" type="text/css" />
+    <script src="https://rawcdn.githack.com/akzhy/Vara/02d135d2864a976f6c70464aebee0f81647695c8/src/vara.min.js"></script>
+
+  </head>
+
+  <body>
+    <div id="container">
+    </div>
+
+    <!--the snitch-->
+    
+    <input type="checkbox" name="checkbox" id="animate" checked>
+      <label for='animate'>
+        <div class='snitch'>
+          <div class='obj'>
+            <div class='body'>
+              <div class='flourish'></div>
+              <div class='flourish'></div>
+              <div class='flourish'></div>
+              <div class='flourish'>
+                <div class='line'></div>
+                <div class='line'></div>
+                <div class='line'></div>
+              </div>
+              <div class='flourish'>
+                <div class='line'></div>
+                <div class='line'></div>
+                <div class='line'></div>
+              </div>
+            </div>
+            <div class='l joint'></div>
+            <div class='l wing'>
+              <div class='feather'></div>
+              <div class='feather'></div>
+              <div class='feather'></div>
+            </div>
+            <div class='r joint'></div>
+            <div class='r wing'>
+              <div class='feather'></div>
+              <div class='feather'></div>
+              <div class='feather'></div>
+            </div>
+          </div>
+          <div class='shadow'></div>
+        </div>
+      </label>
+
+
+
+  </body>
+  <script>
+  var fontSize = 140;
+  if (window.screen.width < 700) fontSize = 132;
+  else if (window.screen.width < 1200) fontSize = 156;
+  var vara = new Vara(
+    "#container",
+    "https://rawcdn.githack.com/akzhy/Vara/ed6ab92fdf196596266ae76867c415fa659eb348/fonts/Satisfy/SatisfySL.json",
+    [
+      {
+        text: "Congratulations!",
+        y: 150,
+        fromCurrentPosition: { y: false },
+        duration: 3000
+      },
+      {
+        text: "You have completed this Level",
+        y: 150,
+        fromCurrentPosition: { y: false },
+        delay: 3000,
+        duration: 5000
+      },
+      {
+        text: "Your score is ",
+        y: 150,
+        id: "no_erase",
+        delay: 3000,
+        duration: 3000
+      }
+    ],
+    {
+      strokeWidth: 2,
+      color: "#523c33",
+      fontSize: fontSize,
+      textAlign: "center"
+    }
+  );
+  vara.ready(function() {
+    var erase = true;
+    vara.animationEnd(function(i, o) {
+      if (i == "no_erase") erase = false;
+      if (erase) {
+        o.container.style.transition = "opacity 1s 1s";
+        o.container.style.opacity = 0;
+      }
+    });
+  });
+
+  </script>
+
+
+</html>
